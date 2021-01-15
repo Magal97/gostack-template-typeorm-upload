@@ -15,36 +15,33 @@ class TransactionsRepository extends Repository<Transaction> {
     const transactions = await transactionsRepository.find();
 
     const { income, outcome } = transactions.reduce(
-    (accumulator, transactions) => {
-      switch(transactions.type){
-        case 'income':
-          accumulator.income += Number(transactions.value);
-          break;
-        case 'outcome':
-          accumulator.outcome += Number(transactions.value);
-          break;
-        default:
-          break;
-      }
+      (accumulator, transactions) => {
+        switch (transactions.type) {
+          case 'income':
+            accumulator.income += Number(transactions.value);
+            break;
+          case 'outcome':
+            accumulator.outcome += Number(transactions.value);
+            break;
+          default:
+            break;
+        }
 
-      return accumulator;
-    }, 
-    {
-      income: 0,
-      outcome: 0,
-      total: 0,
-    });
+        return accumulator;
+      },
+      {
+        income: 0,
+        outcome: 0,
+        total: 0,
+      },
+    );
     const total = income - outcome;
     return {
       income,
       outcome,
       total,
-    }
-    
+    };
   }
-
-  
-
 }
 
 export default TransactionsRepository;
